@@ -2,22 +2,34 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState<number>(0);
+  const [pausedCounter, setPausedCounter] = useState<null | number>(null);
 
   // increment count on each second
 
   useEffect(() => {
+    if (pausedCounter) {
+      return;
+    }
     const timer = setInterval(() => {
       setCount((prevCount) => prevCount + 1);
     }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
+    return () => {
+      clearInterval(timer);
+    };
+  }, [pausedCounter]);
 
   // reset the counter
 
   const handleReset = () => {
     setCount(0);
+  };
+
+  // pause counter
+  const handlePause = () => {
+    setPausedCounter(count);
+
+    console.log("======= pausedCounter", pausedCounter);
   };
 
   return (
@@ -26,6 +38,7 @@ function App() {
 
       <p>Count: {count}</p>
 
+      <button onClick={handlePause}>Pause</button>
       <button onClick={handleReset}>Reset</button>
     </div>
   );
