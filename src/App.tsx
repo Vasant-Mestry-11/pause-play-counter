@@ -6,7 +6,6 @@ function App() {
   const [pausedCounter, setPausedCounter] = useState<null | number>(null);
 
   // increment count on each second
-
   useEffect(() => {
     if (pausedCounter) {
       return;
@@ -20,7 +19,6 @@ function App() {
   }, [pausedCounter]);
 
   // reset the counter
-
   const handleReset = () => {
     setCount(0);
   };
@@ -28,8 +26,11 @@ function App() {
   // pause counter
   const handlePause = () => {
     setPausedCounter(count);
+  };
 
-    console.log("======= pausedCounter", pausedCounter);
+  // continue counter
+  const handleContinue = () => {
+    setPausedCounter(null);
   };
 
   return (
@@ -38,6 +39,7 @@ function App() {
 
       <p>Count: {count}</p>
 
+      <button onClick={handleContinue}>Continue</button>
       <button onClick={handlePause}>Pause</button>
       <button onClick={handleReset}>Reset</button>
     </div>
